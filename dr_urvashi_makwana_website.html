@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LifeSpring Homoeopathic Clinic | Dr. Urvashi Makwana MD (Hom)</title>
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -455,7 +457,7 @@
   <a href="#appointment" onclick="closeMenu()">📅 Book Appointment</a>
   <!-- MANUAL: Add your phone & email below -->
   <a href="tel:+91XXXXXXXXXX">📞 +91 XXXXXXXXXX</a>
-  <a href="mailto:drurvashi@example.com">✉ drurvashi@example.com</a>
+  <a href="/cdn-cgi/l/email-protection#bedacccbccc8dfcdd6d7fedbc6dfd3ced2db90ddd1d3">✉ <span class="__cf_email__" data-cfemail="acc8ded9dedacddfc4c5ecc9d4cdc1dcc0c982cfc3c1">[email&#160;protected]</span></a>
 </div>
 
 <!-- HERO -->
@@ -707,39 +709,31 @@
     <p class="section-subtitle reveal">Fill in the form below and Dr. Makwana's team will confirm your appointment shortly.</p>
 
     <div class="form-container reveal">
-      <!-- ======================================================
-           MANUAL STEP: To make this form actually send emails,
-           go to https://formspree.io, create a free account,
-           create a form, and replace "YOUR_FORM_ID" below
-           with your actual Formspree form ID.
-           e.g., action="https://formspree.io/f/xyzabcde"
-           ====================================================== -->
-
-      <form id="appointmentForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form id="appointmentForm" novalidate>
         <div class="form-row">
           <div class="form-group">
-            <label for="name">Full Name *</label>
-            <input type="text" id="name" name="name" placeholder="Your full name" required>
+            <label for="patient_name">Full Name *</label>
+            <input type="text" id="patient_name" name="patient_name" placeholder="Your full name" required>
           </div>
           <div class="form-group">
-            <label for="phone">Phone / WhatsApp *</label>
-            <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX" required>
+            <label for="patient_phone">Phone / WhatsApp *</label>
+            <input type="tel" id="patient_phone" name="patient_phone" placeholder="+91 XXXXX XXXXX" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label for="email">Email Address *</label>
-            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            <label for="patient_email">Email Address *</label>
+            <input type="email" id="patient_email" name="patient_email" placeholder="your@email.com" required>
           </div>
           <div class="form-group">
-            <label for="country">Country / City</label>
-            <input type="text" id="country" name="country" placeholder="e.g. India, UAE, UK...">
+            <label for="patient_location">Country / City</label>
+            <input type="text" id="patient_location" name="patient_location" placeholder="e.g. India, UAE, UK...">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label for="condition">Health Concern *</label>
-            <select id="condition" name="condition" required>
+            <label for="health_concern">Health Concern *</label>
+            <select id="health_concern" name="health_concern" required>
               <option value="" disabled selected>Select your concern</option>
               <option>Hair Fall &amp; Scalp Disorders</option>
               <option>Hormonal Imbalance (PCOS / Thyroid)</option>
@@ -774,16 +768,23 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="message">Brief Description of Your Concern</label>
-          <textarea id="message" name="message" placeholder="Please describe your symptoms, duration, and any treatments tried so far..."></textarea>
+          <label for="patient_message">Brief Description of Your Concern</label>
+          <textarea id="patient_message" name="patient_message" placeholder="Please describe your symptoms, duration, and any treatments tried so far..."></textarea>
         </div>
-        <button type="submit" class="form-submit">📅 Request Appointment →</button>
+
+        <!-- Submit button with loading state -->
+        <button type="submit" class="form-submit" id="submitBtn">
+          <span id="btnText">📅 Request Appointment →</span>
+          <span id="btnLoading" style="display:none;">Sending… please wait</span>
+        </button>
+        <p id="formError" style="display:none; color:#c0392b; text-align:center; font-size:0.85rem; margin-top:0.75rem;"></p>
         <p class="form-note">We'll confirm your appointment via WhatsApp or email within 24 hours. All information is kept strictly confidential.</p>
       </form>
+
       <div class="form-success" id="formSuccess">
         <div class="checkmark">✅</div>
         <h3>Appointment Request Sent!</h3>
-        <p>Thank you. Dr. Makwana's team will contact you within 24 hours to confirm your appointment.</p>
+        <p>Thank you! A confirmation email has been sent to your inbox.<br>Dr. Makwana's team will contact you within 24 hours.</p>
       </div>
     </div>
   </div>
@@ -805,7 +806,7 @@
       <div class="contact-text">
         <p>Email</p>
         <!-- MANUAL: Replace with real email -->
-        <a href="mailto:drurvashi@example.com">drurvashi@example.com</a>
+        <a href="/cdn-cgi/l/email-protection#88ecfafdfafee9fbe0e1c8edf0e9e5f8e4eda6ebe7e5"><span class="__cf_email__" data-cfemail="f5918780878394869d9cb5908d9498859990db969a98">[email&#160;protected]</span></a>
       </div>
     </div>
     <div class="contact-item">
@@ -834,7 +835,20 @@
   <p style="margin-top: 0.75rem;">© 2025 LifeSpring Homoeopathic Clinic. All rights reserved.</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ============================================================
+  //  EMAILJS CONFIGURATION — FILL IN YOUR VALUES HERE
+  //  See the setup guide below the script for step-by-step help
+  // ============================================================
+  const EMAILJS_PUBLIC_KEY   = "4u5aobCupeIuANhjN";       // e.g. "abc123XYZ"
+  const EMAILJS_SERVICE_ID   = "service_nrjib4i";       // e.g. "service_abc123"
+  const TEMPLATE_TO_DOCTOR   = "template_q6ny6xr";   // e.g. "template_doctor"
+  const TEMPLATE_TO_PATIENT  = "template_xm5fp91";  // e.g. "template_patient"
+  // ============================================================
+
+  // Initialize EmailJS
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
   // Mobile menu
   function toggleMenu() {
     document.getElementById('mobileMenu').classList.toggle('open');
@@ -855,17 +869,79 @@
   }, { threshold: 0.1 });
   reveals.forEach(r => observer.observe(r));
 
-  // Form handling (works with Formspree)
-  document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-    const action = this.getAttribute('action');
-    if (action.includes('YOUR_FORM_ID')) {
-      // Preview mode: just show success message
-      e.preventDefault();
-      this.style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
+  // ── FORM SUBMIT WITH EMAILJS ──
+  document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn      = document.getElementById('submitBtn');
+    const btnText  = document.getElementById('btnText');
+    const btnLoad  = document.getElementById('btnLoading');
+    const errMsg   = document.getElementById('formError');
+
+    // Basic validation
+    const name    = document.getElementById('patient_name').value.trim();
+    const phone   = document.getElementById('patient_phone').value.trim();
+    const email   = document.getElementById('patient_email').value.trim();
+    const concern = document.getElementById('health_concern').value;
+
+    if (!name || !phone || !email || !concern) {
+      errMsg.textContent = 'Please fill in all required fields (Name, Phone, Email, Health Concern).';
+      errMsg.style.display = 'block';
+      return;
     }
-    // If Formspree ID is set, let it submit normally
-    // and add _next redirect in Formspree settings
+    errMsg.style.display = 'none';
+
+    // Show loading state
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoad.style.display = 'inline';
+
+    // Collect all form data into one object
+    // These variable names must match what you use in your EmailJS templates
+    const templateParams = {
+      patient_name:     name,
+      patient_phone:    phone,
+      patient_email:    email,
+      patient_location: document.getElementById('patient_location').value.trim() || 'Not specified',
+      health_concern:   concern,
+      consult_type:     document.getElementById('consult_type').value,
+      preferred_date:   document.getElementById('preferred_date').value || 'Not specified',
+      preferred_time:   document.getElementById('preferred_time').value,
+      patient_message:  document.getElementById('patient_message').value.trim() || 'No additional details provided.',
+    };
+
+    try {
+      // Check if credentials are still placeholders
+      if (EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+        // Demo mode — just show success without actually sending
+        throw new Error("DEMO_MODE");
+      }
+
+      // Send email to DOCTOR
+      await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_TO_DOCTOR, templateParams);
+
+      // Send confirmation email to PATIENT
+      await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_TO_PATIENT, templateParams);
+
+      // Show success
+      document.getElementById('appointmentForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+
+    } catch (error) {
+      if (error.message === "DEMO_MODE") {
+        // Preview mode — show success anyway
+        document.getElementById('appointmentForm').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        // Real error
+        btn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoad.style.display = 'none';
+        errMsg.textContent = 'Something went wrong. Please try again or contact us directly via phone/WhatsApp.';
+        errMsg.style.display = 'block';
+        console.error('EmailJS error:', error);
+      }
+    }
   });
 
   // Smooth nav highlight
@@ -881,6 +957,5 @@
       }
     });
   });
-</script>
-</body>
+</script></body>
 </html>
