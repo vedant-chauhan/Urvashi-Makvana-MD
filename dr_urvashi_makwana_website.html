@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LifeSpring Homoeopathic Clinic | Dr. Urvashi Makwana MD (Hom)</title>
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -32,85 +34,52 @@
     font-size: 16px;
     line-height: 1.7;
   }
-  h1, h2, h3, h4 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;
-  }
+  h1, h2, h3, h4 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; }
 
   /* ── WHATSAPP FLOATING BUTTON ── */
   .whatsapp-float {
     position: fixed;
-    bottom: 28px;
-    right: 28px;
+    bottom: 28px; right: 28px;
     z-index: 999;
-    display: flex;
-    align-items: center;
-    gap: 0;
-    cursor: pointer;
+    display: flex; align-items: center;
   }
-
   .whatsapp-float a {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--whatsapp);
-    color: white;
-    text-decoration: none;
-    border-radius: 50px;
+    display: flex; align-items: center; gap: 0.6rem;
+    background: var(--whatsapp); color: white;
+    text-decoration: none; border-radius: 50px;
     padding: 0.75rem 1.4rem 0.75rem 0.75rem;
-    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
+    box-shadow: 0 6px 24px rgba(37,211,102,0.45);
     transition: all 0.3s ease;
-    overflow: hidden;
-    max-width: 60px;
-  }
-
-  .whatsapp-float a:hover {
-    background: var(--whatsapp-dark);
-    max-width: 240px;
-    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.55);
-    transform: translateY(-2px);
-  }
-
-  .whatsapp-float-icon {
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .whatsapp-float-icon svg {
-    width: 38px;
-    height: 38px;
-  }
-
-  .whatsapp-float-text {
-    font-size: 0.88rem;
-    font-weight: 500;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.2s ease 0.05s;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .whatsapp-float a:hover .whatsapp-float-text {
-    opacity: 1;
-  }
-
-  /* Pulse animation on the button */
-  @keyframes wa-pulse {
-    0% { box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45); }
-    50% { box-shadow: 0 6px 32px rgba(37, 211, 102, 0.7), 0 0 0 8px rgba(37, 211, 102, 0.12); }
-    100% { box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45); }
-  }
-
-  .whatsapp-float a {
+    overflow: hidden; max-width: 60px;
     animation: wa-pulse 2.5s ease-in-out infinite;
   }
   .whatsapp-float a:hover {
+    background: var(--whatsapp-dark);
+    max-width: 240px;
+    box-shadow: 0 8px 30px rgba(37,211,102,0.55);
+    transform: translateY(-2px);
     animation: none;
   }
+  .whatsapp-float-icon { width: 38px; height: 38px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .whatsapp-float-icon svg { width: 38px; height: 38px; }
+  .whatsapp-float-text { font-size: 0.88rem; font-weight: 500; white-space: nowrap; opacity: 0; transition: opacity 0.2s ease 0.05s; font-family: 'DM Sans', sans-serif; }
+  .whatsapp-float a:hover .whatsapp-float-text { opacity: 1; }
+
+  @keyframes wa-pulse {
+    0%   { box-shadow: 0 6px 24px rgba(37,211,102,0.45); }
+    50%  { box-shadow: 0 6px 32px rgba(37,211,102,0.7), 0 0 0 8px rgba(37,211,102,0.12); }
+    100% { box-shadow: 0 6px 24px rgba(37,211,102,0.45); }
+  }
+
+  /* WhatsApp button style */
+  .btn-whatsapp {
+    background: var(--whatsapp); color: white;
+    padding: 0.85rem 2rem; border-radius: 50px;
+    text-decoration: none; font-size: 0.9rem; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    transition: all 0.25s; border: none; cursor: pointer;
+  }
+  .btn-whatsapp:hover { background: var(--whatsapp-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.4); }
 
   /* ── NAV ── */
   nav {
@@ -124,21 +93,12 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 2rem; height: 68px;
   }
-  .logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.35rem; font-weight: 600;
-    color: var(--sage-dark); text-decoration: none;
-    line-height: 1.2;
-  }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 600; color: var(--sage-dark); text-decoration: none; line-height: 1.2; }
   .logo span { display: block; font-size: 0.7rem; font-weight: 300; color: var(--text-light); font-family: 'DM Sans', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
   .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
   .nav-links a { text-decoration: none; color: var(--text-mid); font-size: 0.88rem; letter-spacing: 0.02em; transition: color 0.2s; }
   .nav-links a:hover { color: var(--sage); }
-  .btn-book-nav {
-    background: var(--sage); color: white !important;
-    padding: 0.5rem 1.4rem; border-radius: 50px;
-    font-size: 0.85rem !important; transition: background 0.2s !important;
-  }
+  .btn-book-nav { background: var(--sage); color: white !important; padding: 0.5rem 1.4rem; border-radius: 50px; font-size: 0.85rem !important; transition: background 0.2s !important; }
   .btn-book-nav:hover { background: var(--sage-dark) !important; color: white !important; }
 
   /* ── HAMBURGER ── */
@@ -157,99 +117,47 @@
     padding: 100px 2rem 60px;
     position: relative; overflow: hidden;
   }
-  .hero::before {
-    content: '';
-    position: absolute; top: -100px; right: -100px;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.07);
-  }
-  .hero::after {
-    content: '';
-    position: absolute; bottom: -150px; left: -80px;
-    width: 400px; height: 400px;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.05);
-  }
-  .hero-inner {
-    max-width: 1100px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: center;
-  }
-  .hero-badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.9);
-    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 0.4rem 1rem; border-radius: 50px;
-    border: 1px solid rgba(255,255,255,0.25);
-    margin-bottom: 1.5rem;
-  }
+  .hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 600px; height: 600px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.07); }
+  .hero::after  { content: ''; position: absolute; bottom: -150px; left: -80px; width: 400px; height: 400px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.05); }
+  .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: center; }
+  .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.25); margin-bottom: 1.5rem; }
   .hero h1 { font-size: clamp(2.6rem, 5vw, 4rem); color: white; line-height: 1.1; margin-bottom: 0.4rem; }
   .hero h1 em { font-style: italic; color: rgba(255,255,255,0.82); }
   .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: rgba(255,255,255,0.75); margin-bottom: 1.5rem; font-style: italic; }
   .hero-desc { color: rgba(255,255,255,0.8); font-size: 0.97rem; max-width: 520px; margin-bottom: 2.5rem; line-height: 1.8; }
   .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary {
-    background: white; color: var(--sage-dark);
-    padding: 0.85rem 2rem; border-radius: 50px;
-    text-decoration: none; font-size: 0.9rem; font-weight: 500;
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    transition: all 0.25s; border: none; cursor: pointer;
-  }
+  .btn-primary { background: white; color: var(--sage-dark); padding: 0.85rem 2rem; border-radius: 50px; text-decoration: none; font-size: 0.9rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.25s; border: none; cursor: pointer; }
   .btn-primary:hover { background: var(--cream); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-  .btn-outline {
-    background: transparent; color: white;
-    padding: 0.85rem 2rem; border-radius: 50px;
-    text-decoration: none; font-size: 0.9rem; font-weight: 400;
-    border: 1px solid rgba(255,255,255,0.5);
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    transition: all 0.25s;
-  }
+  .btn-outline { background: transparent; color: white; padding: 0.85rem 2rem; border-radius: 50px; text-decoration: none; font-size: 0.9rem; font-weight: 400; border: 1px solid rgba(255,255,255,0.5); display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.25s; }
   .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
-
-  /* WhatsApp button in hero */
-  .btn-whatsapp {
-    background: var(--whatsapp); color: white;
-    padding: 0.85rem 2rem; border-radius: 50px;
-    text-decoration: none; font-size: 0.9rem; font-weight: 500;
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    transition: all 0.25s; border: none; cursor: pointer;
-  }
-  .btn-whatsapp:hover { background: var(--whatsapp-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.4); }
-
-  .hero-photo-card {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 24px; overflow: hidden;
-    position: relative;
-  }
+  .hero-photo-card { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; overflow: hidden; position: relative; }
   .hero-photo-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top; display: block; }
   .photo-caption { padding: 1.25rem; background: rgba(0,0,0,0.2); }
   .photo-caption p { color: white; font-size: 0.88rem; font-weight: 500; }
   .photo-caption span { color: rgba(255,255,255,0.65); font-size: 0.78rem; }
 
   /* ── TRUST BAR ── */
-  .trust-bar { background: white; border-bottom: 1px solid rgba(74,124,89,0.1); padding: 1.4rem 2rem; }
-  .trust-bar-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 1rem; }
-  .trust-item { text-align: center; }
-  .trust-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--sage); line-height: 1; }
-  .trust-label { font-size: 0.75rem; color: var(--text-light); letter-spacing: 0.05em; text-transform: uppercase; }
+  .trust-bar { background: white; border-bottom: 1px solid rgba(74,124,89,0.1); padding: 1.8rem 2rem; }
+  .trust-bar-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 1.5rem 2rem; }
+  .trust-item { text-align: center; padding: 0 0.5rem; }
+  .trust-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--sage); line-height: 1; margin-bottom: 0.3rem; }
+  .trust-label { font-size: 0.75rem; color: var(--text-light); letter-spacing: 0.06em; text-transform: uppercase; }
 
   /* ── SECTION BASE ── */
-  section { padding: 5rem 2rem; }
+  section { padding: 6rem 2rem; }
   .section-inner { max-width: 1100px; margin: 0 auto; }
-  .section-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage); font-family: 'DM Sans', sans-serif; margin-bottom: 0.75rem; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; color: var(--text-dark); line-height: 1.15; margin-bottom: 1.5rem; }
+  .section-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage); font-family: 'DM Sans', sans-serif; margin-bottom: 0.85rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; color: var(--text-dark); line-height: 1.15; margin-bottom: 1.75rem; }
 
   /* ── ABOUT ── */
   #about { background: white; }
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-  .about-text p { color: var(--text-mid); margin-bottom: 1.2rem; line-height: 1.85; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { color: var(--text-mid); margin-bottom: 1.3rem; line-height: 1.9; }
   .qual-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
-  .qual-tag { background: var(--sage-pale); color: var(--sage-dark); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.82rem; border: 1px solid rgba(74,124,89,0.2); }
-  .philosophy-box { background: var(--cream); border-radius: 20px; padding: 2.5rem; border-left: 4px solid var(--sage); }
+  .qual-tag { background: var(--sage-pale); color: var(--sage-dark); padding: 0.45rem 1.1rem; border-radius: 50px; font-size: 0.82rem; border: 1px solid rgba(74,124,89,0.2); }
+  .philosophy-box { background: var(--cream); border-radius: 20px; padding: 2.75rem; border-left: 4px solid var(--sage); }
   .philosophy-box h3 { font-size: 1.6rem; color: var(--sage-dark); margin-bottom: 1.5rem; }
-  .philosophy-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.93rem; color: var(--text-mid); }
+  .philosophy-item { display: flex; align-items: flex-start; gap: 0.85rem; margin-bottom: 1.1rem; font-size: 0.93rem; color: var(--text-mid); line-height: 1.6; }
   .philosophy-dot { width: 20px; height: 20px; border-radius: 50%; background: var(--sage-pale); border: 2px solid var(--sage); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
   .philosophy-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); display: block; }
 
@@ -257,26 +165,26 @@
   #expertise { background: var(--sage-dark); }
   #expertise .section-label { color: rgba(255,255,255,0.55); }
   #expertise .section-title { color: white; }
-  .expertise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
-  .expertise-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 1.75rem 1.5rem; transition: all 0.3s; cursor: default; }
+  .expertise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .expertise-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 2rem 1.75rem; transition: all 0.3s; cursor: default; }
   .expertise-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-4px); border-color: rgba(255,255,255,0.25); }
-  .expertise-icon { font-size: 1.75rem; margin-bottom: 1rem; }
-  .expertise-card h4 { color: white; font-size: 1.1rem; margin-bottom: 0.4rem; font-family: 'Cormorant Garamond', serif; }
-  .expertise-card p { color: rgba(255,255,255,0.55); font-size: 0.82rem; }
+  .expertise-icon { font-size: 1.9rem; margin-bottom: 1.1rem; }
+  .expertise-card h4 { color: white; font-size: 1.15rem; margin-bottom: 0.5rem; font-family: 'Cormorant Garamond', serif; }
+  .expertise-card p { color: rgba(255,255,255,0.55); font-size: 0.83rem; line-height: 1.6; }
 
   /* ── ONLINE CONSULT ── */
   #online { background: var(--cream-mid); }
   .online-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
   .online-steps { margin-top: 2rem; }
-  .online-step { display: flex; gap: 1.25rem; align-items: flex-start; margin-bottom: 2rem; }
-  .step-num { width: 42px; height: 42px; border-radius: 50%; background: var(--sage); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; flex-shrink: 0; }
-  .step-text h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--sage-dark); margin-bottom: 0.25rem; }
-  .step-text p { color: var(--text-light); font-size: 0.9rem; }
+  .online-step { display: flex; gap: 1.25rem; align-items: flex-start; margin-bottom: 2.25rem; }
+  .step-num { width: 44px; height: 44px; border-radius: 50%; background: var(--sage); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; flex-shrink: 0; }
+  .step-text h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--sage-dark); margin-bottom: 0.3rem; }
+  .step-text p { color: var(--text-light); font-size: 0.9rem; line-height: 1.65; }
   .online-highlight { background: white; border-radius: 24px; padding: 3rem; border: 1px solid rgba(74,124,89,0.12); text-align: center; }
   .online-highlight .big-icon { font-size: 4rem; margin-bottom: 1.5rem; }
   .online-highlight h3 { font-size: 1.9rem; color: var(--sage-dark); margin-bottom: 1rem; }
-  .online-highlight p { color: var(--text-light); font-size: 0.93rem; margin-bottom: 2rem; }
-  .globe-text { background: var(--sage-pale); border-radius: 12px; padding: 1rem 1.5rem; color: var(--sage-dark); font-size: 0.88rem; line-height: 1.7; }
+  .online-highlight p { color: var(--text-light); font-size: 0.93rem; margin-bottom: 2rem; line-height: 1.75; }
+  .globe-text { background: var(--sage-pale); border-radius: 12px; padding: 1.25rem 1.5rem; color: var(--sage-dark); font-size: 0.88rem; line-height: 2; }
 
   /* ── DOCTOR'S QUOTE ── */
   #quote { background: white; }
@@ -288,68 +196,85 @@
 
   /* ── WHY US ── */
   #why { background: var(--cream); }
-  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
-  .why-card { background: white; border-radius: 20px; padding: 2rem 1.75rem; border: 1px solid rgba(74,124,89,0.1); transition: box-shadow 0.25s; }
-  .why-card:hover { box-shadow: 0 12px 40px rgba(74,124,89,0.1); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.75rem; margin-top: 3rem; }
+  .why-card { background: white; border-radius: 20px; padding: 2.25rem 2rem; border: 1px solid rgba(74,124,89,0.1); transition: box-shadow 0.25s, transform 0.25s; }
+  .why-card:hover { box-shadow: 0 12px 40px rgba(74,124,89,0.1); transform: translateY(-3px); }
   .why-icon { font-size: 2rem; margin-bottom: 1rem; }
-  .why-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--sage-dark); margin-bottom: 0.4rem; }
-  .why-card p { color: var(--text-light); font-size: 0.87rem; }
+  .why-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--sage-dark); margin-bottom: 0.5rem; }
+  .why-card p { color: var(--text-light); font-size: 0.87rem; line-height: 1.65; }
 
   /* ── APPOINTMENT FORM ── */
   #appointment { background: var(--sage-dark); }
   #appointment .section-label { color: rgba(255,255,255,0.5); }
   #appointment .section-title { color: white; }
-  #appointment .section-subtitle { color: rgba(255,255,255,0.65); font-size: 1rem; margin-bottom: 3rem; }
-  .form-container { background: white; border-radius: 24px; padding: 3rem; max-width: 780px; margin: 0 auto; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
-  .form-group { margin-bottom: 1.25rem; }
-  .form-group label { display: block; font-size: 0.83rem; font-weight: 500; color: var(--text-mid); margin-bottom: 0.4rem; letter-spacing: 0.02em; }
-  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1.5px solid rgba(74,124,89,0.2); background: var(--cream); font-family: 'DM Sans', sans-serif; font-size: 0.93rem; color: var(--text-dark); transition: border-color 0.2s; outline: none; appearance: none; }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--sage); background: white; }
-  .form-group textarea { resize: vertical; min-height: 100px; }
+  #appointment .section-subtitle { color: rgba(255,255,255,0.65); font-size: 1rem; margin-bottom: 3rem; max-width: 560px; }
+  .form-container { background: white; border-radius: 28px; padding: 3.5rem; max-width: 800px; margin: 0 auto; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 0; }
+  .form-group { margin-bottom: 1.4rem; }
+  .form-group label { display: block; font-size: 0.83rem; font-weight: 500; color: var(--text-mid); margin-bottom: 0.45rem; letter-spacing: 0.02em; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem 1.1rem; border-radius: 12px; border: 1.5px solid rgba(74,124,89,0.2); background: var(--cream); font-family: 'DM Sans', sans-serif; font-size: 0.93rem; color: var(--text-dark); transition: border-color 0.2s; outline: none; appearance: none; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--sage); background: white; box-shadow: 0 0 0 3px rgba(74,124,89,0.08); }
+  .form-group textarea { resize: vertical; min-height: 110px; }
   .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a7c59' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
-  .form-submit { width: 100%; background: var(--sage); color: white; border: none; border-radius: 50px; padding: 1rem; font-size: 1rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.25s; font-weight: 500; letter-spacing: 0.02em; }
-  .form-submit:hover { background: var(--sage-dark); transform: translateY(-1px); }
-  .form-note { text-align: center; color: var(--text-light); font-size: 0.8rem; margin-top: 1rem; }
+  .form-submit { width: 100%; background: var(--sage); color: white; border: none; border-radius: 50px; padding: 1.1rem; font-size: 1rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.25s; font-weight: 500; letter-spacing: 0.02em; margin-top: 0.5rem; }
+  .form-submit:hover { background: var(--sage-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(45,80,56,0.3); }
+  .form-note { text-align: center; color: var(--text-light); font-size: 0.8rem; margin-top: 1.1rem; line-height: 1.7; }
   .form-note a { color: var(--sage); text-decoration: none; }
-  .form-success { display: none; text-align: center; padding: 2rem; }
+  .form-success { display: none; text-align: center; padding: 2.5rem 2rem; }
   .form-success .checkmark { font-size: 3rem; margin-bottom: 1rem; }
   .form-success h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--sage-dark); margin-bottom: 0.5rem; }
   .form-success p { color: var(--text-light); }
 
   /* ── CONTACT BAR ── */
-  #contact { background: white; padding: 3.5rem 2rem; }
-  .contact-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; align-items: center; }
-  .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
-  .contact-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--sage-pale); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+  #contact { background: white; padding: 4rem 2rem; }
+  .contact-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 2rem; align-items: start;
+  }
+  .contact-item { display: flex; align-items: flex-start; gap: 1rem; min-width: 0; }
+  .contact-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--sage-pale); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
   .contact-icon.whatsapp-icon { background: #dcfce7; }
-  .contact-text p { font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
-  .contact-text a, .contact-text span { font-size: 0.95rem; color: var(--text-dark); text-decoration: none; font-weight: 500; }
+  .contact-text { min-width: 0; flex: 1; }
+  .contact-text p { font-size: 0.72rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+  .contact-text a, .contact-text span { font-size: 0.92rem; color: var(--text-dark); text-decoration: none; font-weight: 500; display: block; word-break: break-word; overflow-wrap: break-word; }
   .contact-text a:hover { color: var(--sage); }
   .contact-text a.wa-link { color: var(--whatsapp-dark); }
   .contact-text a.wa-link:hover { color: var(--whatsapp); }
 
   /* ── FOOTER ── */
-  footer { background: #1a2d20; color: rgba(255,255,255,0.5); padding: 2rem; text-align: center; font-size: 0.82rem; }
+  footer { background: #1a2d20; color: rgba(255,255,255,0.5); padding: 2.5rem 2rem; text-align: center; font-size: 0.82rem; line-height: 1.9; }
   footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
-  footer .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: rgba(255,255,255,0.85); margin-bottom: 0.5rem; }
+  footer a:hover { color: rgba(255,255,255,0.9); }
+  footer .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: rgba(255,255,255,0.88); margin-bottom: 0.4rem; }
 
   /* ── SCROLL REVEAL ── */
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* ── RESPONSIVE ── */
+  @media (max-width: 900px) { .contact-inner { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .hamburger { display: flex; }
     .hero-inner { grid-template-columns: 1fr; }
     .hero-photo-card { display: none; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .online-grid { grid-template-columns: 1fr; }
+    .online-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .form-row { grid-template-columns: 1fr; }
     .form-container { padding: 2rem 1.5rem; }
-    section { padding: 3.5rem 1.25rem; }
+    section { padding: 4rem 1.5rem; }
     .whatsapp-float { bottom: 20px; right: 16px; }
+    .expertise-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .why-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  }
+  @media (max-width: 520px) {
+    .contact-inner { grid-template-columns: 1fr; }
+    section { padding: 3.5rem 1.25rem; }
+    .form-container { padding: 1.75rem 1.25rem; }
+    .online-highlight { padding: 2rem 1.5rem; }
+    .expertise-grid { grid-template-columns: 1fr 1fr; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
@@ -359,7 +284,6 @@
 <div class="whatsapp-float">
   <a href="https://wa.me/919979757788?text=Hello%20Dr.%20Urvashi%2C%20I%20would%20like%20to%20book%20a%20consultation.%20When%20are%20you%20available%3F" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
     <div class="whatsapp-float-icon">
-      <!-- Official WhatsApp SVG logo -->
       <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="24" cy="24" r="24" fill="#25D366"/>
         <path d="M34.5 13.5C32.1 11.1 28.9 9.6 25.5 9.5C18.4 9.5 12.6 15.3 12.6 22.4C12.6 24.7 13.2 26.9 14.4 28.9L12.5 36L19.8 34.1C21.7 35.2 23.6 35.8 25.5 35.8C32.6 35.8 38.4 30 38.4 22.9C38.5 19.4 37 16.1 34.5 13.5ZM25.5 33.5C23.8 33.5 22.1 33 20.6 32.1L20.2 31.9L15.8 33.1L17 28.8L16.7 28.4C15.7 26.8 15.1 25 15.1 22.9C15.1 17 19.9 12.2 25.8 12.2C28.6 12.2 31.3 13.3 33.3 15.3C35.3 17.3 36.4 20 36.4 22.9C36.2 28.8 31.4 33.5 25.5 33.5ZM31.4 25.6C31.1 25.4 29.6 24.7 29.3 24.6C29 24.5 28.8 24.4 28.6 24.7C28.4 25 27.8 25.6 27.6 25.9C27.4 26.1 27.2 26.1 26.9 26C25.8 25.5 24.8 24.8 24 24C23.3 23.2 22.7 22.3 22.2 21.3C22 21 22.2 20.8 22.4 20.6C22.6 20.4 22.8 20.1 22.9 19.9C23.1 19.7 23.1 19.5 23.2 19.3C23.3 19.1 23.2 18.9 23.2 18.7C23.1 18.5 22.5 17 22.2 16.4C22 15.9 21.7 15.9 21.5 15.9H21C20.8 15.9 20.5 16 20.2 16.3C20 16.6 19.2 17.3 19.2 18.8C19.2 20.3 20.2 21.7 20.4 21.9C20.6 22.1 22.5 25.1 25.4 26.4C26.1 26.7 26.7 26.9 27.2 27.1C27.9 27.3 28.6 27.3 29.1 27.2C29.7 27.1 30.9 26.5 31.2 25.8C31.5 25.2 31.5 24.7 31.4 25.6Z" fill="white"/>
@@ -393,7 +317,7 @@
   <a href="#why" onclick="closeMenu()">Why Choose Us</a>
   <a href="#appointment" onclick="closeMenu()">📅 Book Appointment</a>
   <a href="https://wa.me/919979757788?text=Hello%20Dr.%20Urvashi%2C%20I%20would%20like%20to%20book%20a%20consultation.%20When%20are%20you%20available%3F" target="_blank" rel="noopener">💬 WhatsApp: +91 99797 57788</a>
-  <a href="mailto:drurvashi@example.com">✉ drurvashi@example.com</a>
+  <a href="tel:+919979757788">📞 +91 99797 57788</a>
 </div>
 
 <!-- HERO -->
@@ -416,7 +340,7 @@
     </div>
     <div class="hero-photo-card">
       <div class="photo-placeholder">
-        <img src="Urvashi Makvana.jpeg" alt="Dr. Urvashi Makwana">
+        <img src="C:\Users\Vedant Chauhan\Downloads\Urvashi Makvana.jpeg" alt="Dr. Urvashi Makwana">
       </div>
       <div class="photo-caption">
         <p>Dr. Urvashi Makwana</p>
@@ -429,22 +353,10 @@
 <!-- TRUST BAR -->
 <div class="trust-bar">
   <div class="trust-bar-inner">
-    <div class="trust-item">
-      <div class="trust-num">MD</div>
-      <div class="trust-label">Homoeopathy</div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-num">🌍</div>
-      <div class="trust-label">Global Consultations</div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-num">6+</div>
-      <div class="trust-label">Speciality Areas</div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-num">100%</div>
-      <div class="trust-label">Natural & Safe</div>
-    </div>
+    <div class="trust-item"><div class="trust-num">MD</div><div class="trust-label">Homoeopathy</div></div>
+    <div class="trust-item"><div class="trust-num">🌍</div><div class="trust-label">Global Consultations</div></div>
+    <div class="trust-item"><div class="trust-num">6+</div><div class="trust-label">Speciality Areas</div></div>
+    <div class="trust-item"><div class="trust-num">100%</div><div class="trust-label">Natural & Safe</div></div>
   </div>
 </div>
 
@@ -568,20 +480,21 @@
     <div class="section-label reveal">Get Started</div>
     <h2 class="section-title reveal">Book Your Consultation</h2>
     <p class="section-subtitle reveal">Fill in the form below and Dr. Makwana's team will confirm your appointment shortly.</p>
+
     <div class="form-container reveal">
-      <form id="appointmentForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form id="appointmentForm" novalidate>
         <div class="form-row">
-          <div class="form-group"><label for="name">Full Name *</label><input type="text" id="name" name="name" placeholder="Your full name" required></div>
-          <div class="form-group"><label for="phone">Phone / WhatsApp *</label><input type="tel" id="phone" name="phone" placeholder="+91 99797 57788" required></div>
+          <div class="form-group"><label for="patient_name">Full Name *</label><input type="text" id="patient_name" name="patient_name" placeholder="Your full name" required></div>
+          <div class="form-group"><label for="patient_phone">Phone / WhatsApp *</label><input type="tel" id="patient_phone" name="patient_phone" placeholder="+91 XXXXX XXXXX" required></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label for="email">Email Address *</label><input type="email" id="email" name="email" placeholder="your@email.com" required></div>
-          <div class="form-group"><label for="country">Country / City</label><input type="text" id="country" name="country" placeholder="e.g. India, UAE, UK..."></div>
+          <div class="form-group"><label for="patient_email">Email Address *</label><input type="email" id="patient_email" name="patient_email" placeholder="your@email.com" required></div>
+          <div class="form-group"><label for="patient_location">Country / City</label><input type="text" id="patient_location" name="patient_location" placeholder="e.g. India, UAE, UK..."></div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label for="condition">Health Concern *</label>
-            <select id="condition" name="condition" required>
+            <label for="health_concern">Health Concern *</label>
+            <select id="health_concern" name="health_concern" required>
               <option value="" disabled selected>Select your concern</option>
               <option>Hair Fall &amp; Scalp Disorders</option>
               <option>Hormonal Imbalance (PCOS / Thyroid)</option>
@@ -612,14 +525,22 @@
             </select>
           </div>
         </div>
-        <div class="form-group"><label for="message">Brief Description of Your Concern</label><textarea id="message" name="message" placeholder="Please describe your symptoms, duration, and any treatments tried so far..."></textarea></div>
-        <button type="submit" class="form-submit">📅 Request Appointment →</button>
+        <div class="form-group">
+          <label for="patient_message">Brief Description of Your Concern</label>
+          <textarea id="patient_message" name="patient_message" placeholder="Please describe your symptoms, duration, and any treatments tried so far..."></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="submitBtn">
+          <span id="btnText">📅 Request Appointment →</span>
+          <span id="btnLoading" style="display:none;">Sending… please wait</span>
+        </button>
+        <p id="formError" style="display:none; color:#c0392b; text-align:center; font-size:0.85rem; margin-top:0.75rem;"></p>
         <p class="form-note">We'll confirm your appointment via WhatsApp or email within 24 hours. All information is kept strictly confidential. &nbsp;|&nbsp; Prefer WhatsApp? <a href="https://wa.me/919979757788?text=Hello%20Dr.%20Urvashi%2C%20I%20would%20like%20to%20book%20a%20consultation.%20When%20are%20you%20available%3F" target="_blank">Message us directly →</a></p>
       </form>
+
       <div class="form-success" id="formSuccess">
         <div class="checkmark">✅</div>
         <h3>Appointment Request Sent!</h3>
-        <p>Thank you. Dr. Makwana's team will contact you within 24 hours to confirm your appointment.</p>
+        <p>Thank you! A confirmation email has been sent to your inbox.<br>Dr. Makwana's team will contact you within 24 hours.</p>
         <br>
         <a href="https://wa.me/919979757788?text=Hello%20Dr.%20Urvashi%2C%20I%20would%20like%20to%20book%20a%20consultation.%20When%20are%20you%20available%3F" target="_blank" rel="noopener" class="btn-whatsapp" style="display:inline-flex; margin-top:0.5rem;">
           <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M34.5 13.5C32.1 11.1 28.9 9.6 25.5 9.5C18.4 9.5 12.6 15.3 12.6 22.4C12.6 24.7 13.2 26.9 14.4 28.9L12.5 36L19.8 34.1C21.7 35.2 23.6 35.8 25.5 35.8C32.6 35.8 38.4 30 38.4 22.9C38.5 19.4 37 16.1 34.5 13.5ZM25.5 33.5C23.8 33.5 22.1 33 20.6 32.1L20.2 31.9L15.8 33.1L17 28.8L16.7 28.4C15.7 26.8 15.1 25 15.1 22.9C15.1 17 19.9 12.2 25.8 12.2C28.6 12.2 31.3 13.3 33.3 15.3C35.3 17.3 36.4 20 36.4 22.9C36.2 28.8 31.4 33.5 25.5 33.5ZM31.4 25.6C31.1 25.4 29.6 24.7 29.3 24.6C29 24.5 28.8 24.4 28.6 24.7C28.4 25 27.8 25.6 27.6 25.9C27.4 26.1 27.2 26.1 26.9 26C25.8 25.5 24.8 24.8 24 24C23.3 23.2 22.7 22.3 22.2 21.3C22 21 22.2 20.8 22.4 20.6C22.6 20.4 22.8 20.1 22.9 19.9C23.1 19.7 23.1 19.5 23.2 19.3C23.3 19.1 23.2 18.9 23.2 18.7C23.1 18.5 22.5 17 22.2 16.4C22 15.9 21.7 15.9 21.5 15.9H21C20.8 15.9 20.5 16 20.2 16.3C20 16.6 19.2 17.3 19.2 18.8C19.2 20.3 20.2 21.7 20.4 21.9C20.6 22.1 22.5 25.1 25.4 26.4C26.1 26.7 26.7 26.9 27.2 27.1C27.9 27.3 28.6 27.3 29.1 27.2C29.7 27.1 30.9 26.5 31.2 25.8C31.5 25.2 31.5 24.7 31.4 25.6Z" fill="white"/></svg>
@@ -648,7 +569,7 @@
       <div class="contact-icon">✉️</div>
       <div class="contact-text">
         <p>Email</p>
-        <a href="mailto:uhmakwana1995@gmail.com">uhmakwana1995@gmail.com</a>
+        <a href="mailto:drurvashi@example.com">drurvashi@example.com</a>
       </div>
     </div>
     <div class="contact-item">
@@ -679,9 +600,21 @@
 </footer>
 
 <script>
-  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
-  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+  // ============================================================
+  //  EMAILJS CONFIGURATION
+  // ============================================================
+  const EMAILJS_PUBLIC_KEY   = "4u5aobCupeIuANhjN";
+  const EMAILJS_SERVICE_ID   = "service_nrjib4i";
+  const TEMPLATE_TO_DOCTOR   = "template_q6ny6xr";
+  const TEMPLATE_TO_PATIENT  = "template_xm5fp91";
+  // ============================================================
 
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  function closeMenu()  { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
@@ -693,15 +626,68 @@
   }, { threshold: 0.1 });
   reveals.forEach(r => observer.observe(r));
 
-  document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-    const action = this.getAttribute('action');
-    if (action.includes('YOUR_FORM_ID')) {
-      e.preventDefault();
-      this.style.display = 'none';
+  // ── FORM SUBMIT WITH EMAILJS ──
+  document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn     = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnLoad = document.getElementById('btnLoading');
+    const errMsg  = document.getElementById('formError');
+
+    const name    = document.getElementById('patient_name').value.trim();
+    const phone   = document.getElementById('patient_phone').value.trim();
+    const email   = document.getElementById('patient_email').value.trim();
+    const concern = document.getElementById('health_concern').value;
+
+    if (!name || !phone || !email || !concern) {
+      errMsg.textContent = 'Please fill in all required fields (Name, Phone, Email, Health Concern).';
+      errMsg.style.display = 'block';
+      return;
+    }
+    errMsg.style.display = 'none';
+
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoad.style.display = 'inline';
+
+    const templateParams = {
+      patient_name:     name,
+      patient_phone:    phone,
+      patient_email:    email,
+      patient_location: document.getElementById('patient_location').value.trim() || 'Not specified',
+      health_concern:   concern,
+      consult_type:     document.getElementById('consult_type').value,
+      preferred_date:   document.getElementById('preferred_date').value || 'Not specified',
+      preferred_time:   document.getElementById('preferred_time').value,
+      patient_message:  document.getElementById('patient_message').value.trim() || 'No additional details provided.',
+    };
+
+    try {
+      if (EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") throw new Error("DEMO_MODE");
+
+      await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_TO_DOCTOR, templateParams);
+      await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_TO_PATIENT, templateParams);
+
+      document.getElementById('appointmentForm').style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
+
+    } catch (error) {
+      if (error.message === "DEMO_MODE") {
+        document.getElementById('appointmentForm').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        btn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoad.style.display = 'none';
+        errMsg.textContent = 'Something went wrong. Please try again or contact us directly via WhatsApp.';
+        errMsg.style.display = 'block';
+        console.error('EmailJS error:', error);
+      }
     }
   });
 
+  // Smooth nav highlight
   const sections = document.querySelectorAll('section[id]');
   window.addEventListener('scroll', () => {
     const scrollY = window.pageYOffset;
